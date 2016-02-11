@@ -17,17 +17,42 @@ public class QueenBoard{
     public boolean solve(){
 	return solveH(0);
     }
-
-    /**
-     *Helper method for solve. 
-     */
+    
     private boolean solveH(int col){
-	
-	for (int i=0;i<board.length;i++){
-	    if (!addQueen(i,col+1)){
-		return false;
+	int row = 0;
+	boolean queened = false;
+
+	while (!queened&&row<board.length){
+	    if (addQueen(row,col)){
+		queened = true;
+		//If the queen is added properly, then we stop trying to add queens and begin testing
 	    }
+	    row++;
 	}
+
+	if (col==0 && row==board.length-1){return false;}
+
+	if (col==board[0].length-1){
+	    //If we reached the end of the cols
+	    for (int i = 0;i<board.length;i++){
+		for (int k = 0;k<board[i].length;k++){
+		    if (board[i][k]!=0){return true;}
+		    //and if there is anything that isnt a 0, then the board is solved.
+		}
+	    }
+	    return false;
+	    //Otherwise, the board is still filled with 0s and cannot be solved.
+	}
+
+	if (row==board.length-1 && !queened){
+	    //If we reached the end of the row and there has been no queen added still, then there are no possible queens placable in this row. Thus, we must backtrack and remove the last queen.
+	    for (int i = 0;i<board.length;i++){
+		if (board[row-1][i]==1){queened = !removeQueen(row-1,i);}
+	    }
+	    return solveH(col-1);
+	}
+
+	return solveH(col+1);	    
     }
 
     public void printSolution(){
@@ -99,15 +124,9 @@ public class QueenBoard{
     }
     
     public static void main(String[]args){
-	QueenBoard b = new QueenBoard(5);
-        /*System.out.println(b);
-	b.addQueen(3,0);
-	b.addQueen(0,1);
-        System.out.println(b);
-	b.removeQueen(3,0);
-        System.out.println(b);*/
+	QueenBoard b = new QueenBoard(3);
 	b.printSolution();
-	b.solve();
+	System.out.println(b.solve());
 	b.printSolution();
     }
     
