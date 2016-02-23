@@ -7,12 +7,19 @@ public class KnightBoard{
 	knight = 0;
     }
 
+    public KnightBoard (int rows, int cols){
+	board = new int[rows][cols];
+	knight = 0;
+    }
+
     public void printSolution (){
 	for (int i=0;i<board.length;i++){
 	    for (int k=0;k<board[i].length;k++){
 		if (board.length*board.length>=10){
 		    if (board[i][k]<10){
 			System.out.print(" "+board[i][k]+" ");
+		    }else{
+			System.out.print(board[i][k]+" ");
 		    }
 		}else{
 		    System.out.print(board[i][k]+" ");
@@ -21,6 +28,7 @@ public class KnightBoard{
 	    System.out.print("\n");
 	}
     }
+	
 
     public boolean solve (){
 	for (int i=0;i<board.length;i++){
@@ -46,7 +54,7 @@ public class KnightBoard{
 	}
 	
 	//Otherwise, we can place the knight there.
-	board[row][col]= knight+1;
+	board[row][col]= ++ knight;
 
 	//Check if it is solved after placing, if the knight landed on its last possible square.
 	if (knight==board.length*board.length){
