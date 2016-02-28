@@ -20,7 +20,32 @@ public class Maze{
       3. When the file is not found, print an error and exit the program.
     */
     public Maze(String filename, boolean ani){
-        //COMPLETE CONSTRUCTOR
+        try{
+	    Scanner s = new Scanner (new File(filename));
+	    ArrayList<String> ary = new ArrayList<String>();
+	    while (s.hasNextLine()){
+		ary.add(s.nextLine());
+	    }
+	    int rows = ary.size();
+	    int cols = ary.get(0).length();
+	    maze = new char[rows][cols];
+	    for (int i=0;i<rows;i++){
+		for (int k=0;k<cols;k++){
+		    if (ary.get(i).charAt(k)=='S'){
+			startx=i;
+			starty=k;
+			maze[i][k]=ary.get(i).charAt(k);
+		    }else{
+			maze[i][k]=ary.get(i).charAt(k);
+		    }
+		}
+	    }
+	    animate=ani;
+	}
+	catch (FileNotFoundException e){
+	    System.out.println("File not found.");
+	}
+	
     }
 
 
@@ -59,16 +84,39 @@ public class Maze{
             wait(20);
         }
 
-        //COMPLETE SOLVE
+	//Are we at the end?
+	if (maze[x][y]=='E'){
+	    return true;
+	}
+	//Are we on a space already visited or a wall?
+	if (maze[x][y]!=' '){
+	    return false;
+	}
 
-        return false; //so it compiles
+	//Guess not, time to mark where we are.
+	maze[x][y]='@';
+
+	//Can we move around??
+	if (solve (x,y+1)){
+	    return true;
+	}
+	if (solve (x,y-1)){
+	    return true;
+	}
+	if (solve (x+1,y)){
+	    return true;
+	}
+	if (solve (x-1,y)){
+	    return true;
+	}
+
+        //If we reach a dead end, looks like we have to backtrack.
+	maze[x][y]='.';
+        return false;
     }
 
-
-
     //FREE STUFF!!! *you should be aware of this*
-
-
+    
     public void clearTerminal(){
         System.out.println(CLEAR_SCREEN);
     }
@@ -121,11 +169,6 @@ public class Maze{
         catch (InterruptedException e) {
         }
     }
-
     
-
     //END FREE STUFF
-
-
-
 }
