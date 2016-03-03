@@ -39,71 +39,52 @@ public class Silver{
 	    int startcol = s.nextInt()-1;
 	    int endrow = s.nextInt()-1;
 	    int endcol = s.nextInt()-1;
-	    
-	    if(field.get(startrow-1,startcol)!=-1&&startrow-1>=0){
-		field.add(startrow-1,startcol,1);
-	    }
-	    if(field.get(startrow+1,startcol)!=-1&&startrow+1<rows){
-		field.add(startrow+1,startcol,1);
-	    }
-	    if(field.get(startrow,startcol-1)!=-1&&startcol-1>=0){
-		field.add(startrow,startcol-1,1);
-	    }
-	    if(field.get(startrow,startcol+1)!=-1&&startcol+1<cols){
-		field.add(startrow,startcol+1,1);
-	    }
 
-	    for (int steps=1;steps<seconds;steps++){
-		for (int i=0;i<rows-1;i++){
-		    if (startcol%2==1||(startrow%2==0&&startcol==0)){
-			for (int k=0;k<cols;k+=2){
-			    field.helper(i,k);
+	    for (int x=0;x<seconds;x++){
+		for (int i=0;i<rows;i++){
+		    for (int k=0;k<cols;k++){
+			if (field.get(i,k)>0){
+			    helper(i,k,rows,cols,field);
 			}
-			for (int k=1;k<cols;k+=2){
-			    field.helper(i,k);
-			}
-		    }else{
-			for (int k=1;k<cols;k+=2){
-			    field.helper(i,k);
-			}
-			for (int k=0;k<cols;k+=2){
-			    field.helper(i,k);
+		    }
+		}
+
+		for (int y=0;y<rows;y++){
+		    for(int z=0;z<cols;z++){
+			if (field.get(y,z)<-1){
+			    field.add(y,z,-1*field.get(y,z)/2);
 			}
 		    }
 		}
 	    }
 	    
-	    System.out.println(field.get(endrow,endcol));
+	    System.out.println(field.get(endrow,endcol)+", 7, Liu, Lawrence");
 	}
 	catch (FileNotFoundException e){
 	    System.out.println(e);
 	}
     }
 
-    public void helper (int row, int col){
-	if (pasture[row][col]>0){
-	    pasture[row][col]=0;
-	}else{
-	    if(pasture[row][col]!=-1){
-		
-		if(pasture[row-1][col]!=-1&&row-1>0){
-		    pasture[row][col]+=pasture[row-1][col];
-		}
-		
-		if(pasture[row+1][col]!=-1&&row+1<pasture.length){
-		    pasture[row][col]+=pasture[row+1][col];
-		}
-		
-		if(pasture[row][col-1]!=-1&&col-1>0){
-		    pasture[row][col]+=pasture[row][col-1];
-		}
-		
-		if(pasture[row][col+1]!=-1&&col+1<pasture[0].length){
-		    pasture[row][col]+=pasture[row][col+1];
-		}
-	    }
+    public static void helper (int row, int col, int rows, int cols, Silver field){
+	if ((field.get(row+1,col)>=0||field.get(row+1,col)<=-2)&&row<rows-1) {
+	    field.add(row+1,col,field.get(row+1,col)+(-2*field.get(row,col)));
 	}
+	
+	if ((field.get(row-1,col)>=0||field.get(row-1,col)<=-2)&&row>0){
+	    field.add(row-1,col,field.get(row-1,col)+(-2*field.get(row,col)));
+	}
+	
+	if ((field.get(row,col+1)>=0||field.get(row,col+1)<=-2)&&col<cols-1){
+	    field.add(row,col+1,field.get(row,col+1)+(-2*field.get(row,col)));
+	}
+
+	if ((field.get(row,col-1)>=0||field.get(row,col-1)<=-2)&&col>0){
+	    field.add(row,col-1,field.get(row,col-1)+(-2*field.get(row,col)));
+	}
+	
+	field.add(row,col,0);
     }
+
 
 
     public String toString(){
