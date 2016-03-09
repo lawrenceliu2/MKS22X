@@ -41,10 +41,35 @@ public class Quick{
 	return low;
     }
 
+    public static int quickselect (int[]data, int k){
+	return quickselect (data, k, 0, data.length-1);
+    }
+
+    public static int quickselect (int[]data, int k, int left, int right){
+	int ans = partition(data, left, right);
+	if (ans==k){
+	    return data[k];
+	}else{
+	    if (ans<k){
+		return quickselect (data,k,ans+1,right);
+	    }else{
+		return quickselect (data,k,left,ans-1);
+	    }
+	}
+    }
+
     
     public static void main(String[]args){
 	int[]data = {6,-3,2,12,-18,123};
-	System.out.println(partition(data,0,5));
+	System.out.println(quickselect(data,1));
+	printArray(data);
+	System.out.println(quickselect(data,2));
+	printArray(data);
+	System.out.println(quickselect(data,3));
+	printArray(data);
+	System.out.println(quickselect(data,4));
+	printArray(data);
+	System.out.println(quickselect(data,5));
 	printArray(data);
     }
 }
