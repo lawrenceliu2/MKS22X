@@ -2,6 +2,10 @@ import java.util.*;
 
 public class Quick{
 
+    public static String name(){
+	return "7,Liu,Lawrence";
+    }
+
     public static void printArray(int[]data){
 	System.out.print("{");
 	for (int i = 0;i<data.length;i++){
@@ -15,7 +19,8 @@ public class Quick{
 	System.out.print("}\n");
     }
 
-    private static int partition (int[]data, int left, int right){
+    /* Mr. K's partition was better
+      private static int partition (int[]data, int left, int right){
 	int element = data[(int)(Math.random()*(right-left+1))+left];
 	int[]ans = new int[data.length];
 	int low = 0;
@@ -39,37 +44,62 @@ public class Quick{
 	    data[i]=ans[i];
 	}
 	return low;
+	}*/
+
+    private static void swap (int[]data, int x, int y){
+	int placeholder=data[x];
+	data[x]=data[y];
+	data[y]=placeholder;
     }
 
-    public static int quickselect (int[]data, int k){
-	return quickselect (data, k, 0, data.length-1);
+    private static int partition (int[]data, int left, int right){
+	int index = (int) (left+Math.random()*(right-left+1));
+	int value = data[index];
+	swap(data, index, right);
+	for (int i=left;i<right;i++){
+	    if (data[i]<=value){
+		swap(data, left, i);
+		left++;
+	    }
+	}
+	swap(data,left,right);
+	return left;
     }
 
-    public static int quickselect (int[]data, int k, int left, int right){
+    public static int quickSelect (int[]data, int k){
+	return quickSelect (data, k, 0, data.length-1);
+    }
+
+    public static int quickSelect (int[]data, int k, int left, int right){
 	int ans = partition(data, left, right);
-	if (ans==k){
-	    return data[k];
+	if (left==right){
+	    return data[left];
 	}else{
 	    if (ans<k){
-		return quickselect (data,k,ans+1,right);
+		return quickSelect (data,k,ans+1,right);
 	    }else{
-		return quickselect (data,k,left,ans-1);
+		return quickSelect (data,k,left,ans-1);
 	    }
+	}
+    }
+
+    public static void quickSort (int[]data){
+	quickSort (data, 0, data.length-1);
+    }
+
+    public static void quickSort (int[]data, int left, int right){
+	if (Math.abs(left-right)>1){
+	    int index = partition (data, left, right);
+	    quickSort (data, index+1, right);
+	    quickSort (data, left, index-1);
 	}
     }
 
     
     public static void main(String[]args){
 	int[]data = {6,-3,2,12,-18,123};
-	System.out.println(quickselect(data,1));
+	quickSort(data);
 	printArray(data);
-	System.out.println(quickselect(data,2));
-	printArray(data);
-	System.out.println(quickselect(data,3));
-	printArray(data);
-	System.out.println(quickselect(data,4));
-	printArray(data);
-	System.out.println(quickselect(data,5));
-	printArray(data);
+
     }
 }
