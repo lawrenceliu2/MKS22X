@@ -52,7 +52,7 @@ public class Quick{
 	data[y]=placeholder;
     }
 
-    private static int partition (int[]data, int left, int right){
+    private static int partitionOld (int[]data, int left, int right){
 	int index = (int) (left+Math.random()*(right-left+1));
 	int value = data[index];
 	swap(data, index, right);
@@ -66,21 +66,49 @@ public class Quick{
 	return left;
     }
 
-    public static int quickSelect (int[]data, int k){
-	return quickSelect (data, k, 0, data.length-1);
+    public static int quickSelectOld (int[]data, int k){
+	return quickSelectOld (data, k, 0, data.length-1);
     }
 
-    public static int quickSelect (int[]data, int k, int left, int right){
-	int ans = partition(data, left, right);
+    public static int quickSelectOld (int[]data, int k, int left, int right){
+	int ans = partitionOld(data, left, right);
 	if (left==right){
 	    return data[left];
 	}else{
 	    if (ans<k){
-		return quickSelect (data,k,ans+1,right);
+		return quickSelectOld (data,k,ans+1,right);
 	    }else{
-		return quickSelect (data,k,left,ans-1);
+		return quickSelectOld (data,k,left,ans-1);
 	    }
 	}
+    }
+
+    public static void quickSortOld (int[]data){
+	quickSortOld (data, 0, data.length-1);
+    }
+
+    public static void quickSortOld (int[]data, int left, int right){
+	if (left<=right){
+	    int index = partitionOld (data, left, right);
+	    quickSortOld (data, index+1, right);
+	    quickSortOld (data, left, index-1);
+	}
+    }
+
+
+
+    private static int[] partition (int[]data, int left, int right){
+	int index = (int) (left+Math.random()*(right-left+1));
+	int value = data[index];
+	swap(data, index, right);
+	for (int i=left;i<right;i++){
+	    if (data[i]<=value){
+		swap(data, left, i);
+		left++;
+	    }
+	}
+	swap(data,left,right);
+	return data;
     }
 
     public static void quickSort (int[]data){
@@ -89,17 +117,21 @@ public class Quick{
 
     public static void quickSort (int[]data, int left, int right){
 	if (Math.abs(left-right)>1){
-	    int index = partition (data, left, right);
-	    quickSort (data, index+1, right);
-	    quickSort (data, left, index-1);
+	    int[] index = partition (data, left, right);
+	    quickSort (data, index[0], index[1]);
 	}
     }
 
     
     public static void main(String[]args){
 	int[]data = {6,-3,2,12,-18,123};
-	quickSort(data);
+	int[]data2 = {6,-3,2,12,-18,123};
+	int[]data3 = {6,-3,2,12,-18,123};
+	Arrays.sort(data);
 	printArray(data);
-
+	quickSortOld(data2);
+	printArray(data2);
+	//quickSort(data3);
+	//printArray(data3);
     }
 }
