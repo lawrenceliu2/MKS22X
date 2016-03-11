@@ -107,8 +107,23 @@ public class Quick{
 		left++;
 	    }
 	}
+	int mid = left+1;
+	right = mid;
 	swap(data,left,right);
-	return data;
+	for (int i=0;i<left;i++){
+	    if (data[i]==value){
+		swap(data, i, left);
+		left--;
+	    }
+	}
+	for (int i=mid;i<right;i++){
+	    if (data[i]==value){
+		swap(data, i, right);
+		right--;
+	    }
+	}
+	int[]ans={left,right};
+	return ans;
     }
 
     public static void quickSort (int[]data){
@@ -124,7 +139,7 @@ public class Quick{
 
     
     public static void main(String[]args){
-	int[]data = {6,-3,2,12,-18,123};
+	/*int[]data = {6,-3,2,12,-18,123};
 	int[]data2 = {6,-3,2,12,-18,123};
 	int[]data3 = {6,-3,2,12,-18,123};
 	Arrays.sort(data);
@@ -133,5 +148,19 @@ public class Quick{
 	printArray(data2);
 	//quickSort(data3);
 	//printArray(data3);
+	int[] d = new int [4000000];
+	int[] c = new int [d.length];
+
+	for(int i = 0; i < d.length; i++){
+	    d[i]= (int)(Math.random()*Integer.MAX_VALUE);
+	    c[i]= d[i];
+	}
+
+	quickSortOld(d); //or even your old quicksort!!!
+	Arrays.sort(c);
+	System.out.println("Done: Sorted="+Arrays.equals(d,c));*/
+	int[]data = {6,-3,2,12,2,123,2};
+	printArray(partition(data,0,data.length-1));
+	printArray(data);
     }
 }
