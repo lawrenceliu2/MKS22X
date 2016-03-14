@@ -98,17 +98,35 @@ public class Quick{
 
 
     private static int[] partition (int[]data, int left, int right){
-	int index = (int) (left+Math.random()*(right-left+1));
+	int index = (int) (left+(Math.random()*(right-left+1)));
 	int value = data[index];
-	swap(data, index, right);
-	for (int i=left;i<right;i++){
-	    if (data[i]<=value){
-		swap(data, left, i);
-		left++;
+	int[]ans=new int[data.length];
+	int leftCount = left;
+	int rightCount = right;
+	
+	for (int i = left;i<=right;i++){
+	    if (data[i]<value){
+		ans[leftCount]=data[i];
+		leftCount++;
+	    }
+	    if (data[i]>value){
+		ans[rightCount]=data[i];
+		rightCount--;
 	    }
 	}
-	swap(data,left,right);
-	return data;
+	
+	for (int i = leftCount;i<=rightCount;i++){
+	    ans[i]=value;
+	}
+
+	for (int i =left;i<=right;i++){
+	    data[i]=ans[i];
+	}
+
+	int[]blah=new int[2];
+	blah[0]=leftCount-1;
+	blah[1]=rightCount+1;
+	return blah;
     }
 
     public static void quickSort (int[]data){
@@ -116,22 +134,34 @@ public class Quick{
     }
 
     public static void quickSort (int[]data, int left, int right){
-	if (Math.abs(left-right)>1){
+	if (left<right){
 	    int[] index = partition (data, left, right);
-	    quickSort (data, index[0], index[1]);
+	    quickSort (data, left, index[0]);
+	    quickSort (data, index[1],right);
 	}
     }
 
     
     public static void main(String[]args){
-	int[]data = {6,-3,2,12,-18,123};
+	/*int[]data = {6,-3,2,12,-18,123};
 	int[]data2 = {6,-3,2,12,-18,123};
 	int[]data3 = {6,-3,2,12,-18,123};
 	Arrays.sort(data);
 	printArray(data);
 	quickSortOld(data2);
 	printArray(data2);
-	//quickSort(data3);
-	//printArray(data3);
+	quickSort(data3);
+	printArray(data3);*/
+        int[] a = new int [4000000];
+
+	for(int i = 0; i < a.length; i++){
+	    a[i]= (int)(Math.random()*Integer.MAX_VALUE);
+	}
+	
+	long start = System.currentTimeMillis();
+	quickSort(a);
+	long elapsedTimeMillis = System.currentTimeMillis()-start;
+	float elapsedTimeSec = elapsedTimeMillis/1000F;
+	System.out.println(elapsedTimeSec);
     }
 }
