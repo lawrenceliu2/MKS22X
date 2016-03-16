@@ -136,8 +136,8 @@ public class Quick{
     public static void quickSort (int[]data, int left, int right){
 	if (left<right){
 	    int[] index = partition (data, left, right);
-	    quickSort (data, left, index[0]);
-	    quickSort (data, index[1],right);
+	    quickSort (data, left, index[0]-1);
+	    quickSort (data, index[1]+1,right);
 	}
     }
 
