@@ -119,7 +119,7 @@ public class MyLinkedList <T>{
     public int indexOf (T value){
 	LNode current = start;
 	for (int i=0;i<size;i++){
-	    if (current.get()==value){
+	    if (current.get().equals(value)){
 		return i;
 	    }else{
 		current=current.getNext();
