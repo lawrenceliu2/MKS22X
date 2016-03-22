@@ -125,7 +125,7 @@ public class MyLinkedList <T>{
 		current=current.getNext();
 	    }
 	}
-	return T;
+	return -1;
     }
 
     public String toString(){
@@ -143,7 +143,7 @@ public class MyLinkedList <T>{
 
 
     public static void main(String[]args){
-	MyLinkedList blah = new MyLinkedList();
+	MyLinkedList <Integer>blah = new MyLinkedList<Integer>();
 	ArrayList<Integer> blargh = new ArrayList<Integer>();
 	long start, end;
 
