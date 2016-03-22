@@ -44,17 +44,21 @@ public class MyLinkedList <T>{
     }
 
     public T set (int index, T newValue){
-	LNode current = start;
-	int i = 0;
-	while (i<index){
-	    if (current.getNext()!=null){
-		current=current.getNext();
-		i++;
+	if (index<0||index>size){
+	    throw new IndexOutOfBoundsException();
+	}else{
+	    LNode current = start;
+	    int i = 0;
+	    while (i<index){
+		if (current.getNext()!=null){
+		    current=current.getNext();
+		    i++;
+		}
 	    }
+	    T val = current.get();
+	    current.set(newValue);
+	    return val;
 	}
-	T val = current.get();
-	current.set(newValue);
-	return val;
     }
 
     public int size(){
@@ -62,44 +66,51 @@ public class MyLinkedList <T>{
     }
 
     public T remove (int index){
-	LNode current = start;
-	int i = 0;
-	while (i<index){
-	    if (current.getNext()!=null){
-		current=current.getNext();
-		i++;
+	if (index<0||index>size){
+	    throw new IndexOutOfBoundsException();
+	}else{
+	    LNode current = start;
+	    int i = 0;
+	    while (i<index){
+		if (current.getNext()!=null){
+		    current=current.getNext();
+		    i++;
+		}
 	    }
-	}
-	T val= current.get();
-        for (int k = i;k<size;k++){
-	    if (current.getNext().getNext()==null){
-		current.set(current.getNext().get());
-		current.setNext(null);
-		return val;
-	    }else{
-		current.set(current.getNext().get());
-		current=current.getNext();
+	    T val= current.get();
+	    for (int k = i;k<size;k++){
+		if (current.getNext()==null){
+		    current=current.getNext();
+		    return val;
+		}else{
+		    current.set(current.getNext().get());
+		    current=current.getNext();
+		}
 	    }
+	    return val;
 	}
-	return val;
     }
 
     public boolean add(int index, T value){
-	LNode current = start;
-        int i = 0;
-	while (i<index){
-	    current=current.getNext();
-	    i++;
+	if (index<0||index>size){
+	    throw new IndexOutOfBoundsException();
+	}else{
+	    LNode current = start;
+	    int i = 0;
+	    while (i<index){
+		current=current.getNext();
+		i++;
+	    }
+	    for (int k = index;k<size;k++){
+		T val=current.get();
+		current.set(value);
+		value=val;
+		end = current.getNext();
+		current=current.getNext();
+	    }
+	    size++;
+	    return true;
 	}
-	for (int k = index;k<size;k++){
-	    T val=current.get();
-	    current.set(value);
-	    value=val;
-	    end = current.getNext();
-	    current=current.getNext();
-	}
-	size++;
-	return true;
     }
 
     public boolean add(T data){
