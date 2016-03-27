@@ -1,9 +1,11 @@
 import java.util.*;
 
-public class MyLinkedList <T> implements Iterable{
+public class MyLinkedList <T> implements Iterable<T>{
     private LNode start, end;
     private int size;
 
+
+    
     public class LNode{
 	private T value;
 	private LNode next;
@@ -31,9 +33,41 @@ public class MyLinkedList <T> implements Iterable{
     }
     
 
-    /*public Iterator<T> iterator(){
-	Iterator<T> ans = 
-	}*/
+    
+    
+    public class MyLinkedListIteratorThingy implements Iterator<T>{
+	private LNode next;
+	
+	public MyLinkedListIteratorThingy(){
+	    next = start;
+	}
+
+	public boolean hasNext(){
+	    return next!=null;
+	}
+
+	public T next(){
+	    if (!hasNext()){
+		throw new NoSuchElementException();
+	    }else{
+		T value = next.get();
+		next = next.getNext();
+		return value;
+	    }
+	}
+
+	public void remove(){
+	    throw new NoSuchElementException();
+	}
+    }
+
+    public Iterator<T> iterator(){
+	return new MyLinkedListIteratorThingy();
+    }
+
+
+
+
     
     public T get (int index){
 	LNode current = start;
@@ -70,37 +104,28 @@ public class MyLinkedList <T> implements Iterable{
     }
 
     public T remove (int index){
-	if (index<0||index>size){
+	if (index<0||index>=size){
 	    throw new IndexOutOfBoundsException();
 	}else{
-	    LNode current = start;
-	    int i = 0;
-
-	    if (index == 0){
-		T val = current.get();
-		current = current.getNext();
-		start = current;
-		size--;
-		return val;
+	    LNode track=null;
+	    LNode current=start;
+	    for (int i=1;i<=index;i++){
+		track=current;
+		current=current.next;
+	    }
+	    
+	    if (index==0){
+		start=start.next;
+	    }else{
+		track.next=current.next;
 	    }
 
-	    while (i<index){
-		if (index==size-1){
-		    end = current;
-		    }
-		current=current.getNext();
-		i++;
-	    }
-	    T val= current.get();
-
-	    for (int k = i;k<size-1;k++){
-		end = current;
-		current.set(current.getNext().get());
-		current = current.getNext();
+	    if (index==size-1){
+		end=track;
 	    }
 
 	    size--;
-	    return val;
+	    return current.get();
 	}
     }
 
@@ -108,26 +133,27 @@ public class MyLinkedList <T> implements Iterable{
 	if (index<0||index>size){
 	    throw new IndexOutOfBoundsException();
 	}else{
-	    LNode current = start;
-	    int i = 0;
-	    while (i<index){
-		current=current.getNext();
-		i++;
+	    LNode track=null;
+	    LNode current=start;
+	    for (int i=1;i<=index;i++){
+		track=current;
+		current=current.next;
 	    }
+
+	    LNode data=new LNode(value);
+
+	    if (index==0){
+		data.next=start;
+		start=data;
+	    }else{
+		track.next=data;
+		data.next=current;
+	    }
+
 	    if (index==size){
-		current.setNext(new LNode(value));
-		current=current.getNext();
-		end = current;
-		size++;
-		return true;
+		end=data;
 	    }
-	    for (int k = index;k<size;k++){
-		T val=current.get();
-		current.set(value);
-		value=val;
-		end = current.getNext();
-		current=current.getNext();
-	    }
+
 	    size++;
 	    return true;
 	}
@@ -197,7 +223,7 @@ public class MyLinkedList <T> implements Iterable{
             n.add(""+i);
             m.add(""+i);
         }
-
+	
         try{
             m.add(-1,"oops");
             System.out.println("\n\nAdd -1 #####################################");
@@ -278,9 +304,20 @@ public class MyLinkedList <T> implements Iterable{
                     System.exit(1);
                 }
             }
-        }
+	    }
         System.out.println(m.toString(true));
         System.out.println(n);
+
+	/*System.out.println("BLAH");
+	for (String x:m){
+	    System.out.println(x+" ");
+	    }
+
+	Iterator <String> it = m.iterator();
+	while (it.hasNext()){
+	    String x = it.next();
+	    System.out.print(x+" ");
+	    }*/
 
 	
 	/*MyLinkedList <Integer>blah = new MyLinkedList<Integer>();
