@@ -15,7 +15,7 @@ public class ParenDemo{
 	String input = "()()(([[]]))";
 	if(args.length > 0){
 	    input = args[0];
-	    System.out.println( isMatching(input)); 
+	    System.out.println(isMatching(input)); 
 	}else{
 	    System.out.println("Usage:"); 
 	    System.out.println("java ParenDemo \"text\""); 
