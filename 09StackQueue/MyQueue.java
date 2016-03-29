@@ -2,7 +2,6 @@ import java.util.*;
 
 public class MyQueue<T>{
     private MyLinkedList<T> queue;
-    private int size;
 
     public void enqueue (T item){
 	queue.add(item);
@@ -23,11 +22,11 @@ public class MyQueue<T>{
     }
 
     public int size(){
-	return size;
+	return queue.size();
     }
 
     public boolean isEmpty(){
-	return size==0;
+	return size()==0;
     }
 
 }

@@ -2,7 +2,6 @@ import java.util.*;
 
 public class MyStack<T>{
     private MyLinkedList<T> stack;
-    private int size;
 
     public void push (T item){
 	stack.add(0,item);
@@ -23,10 +22,10 @@ public class MyStack<T>{
     }
 
     public int size(){
-	return size;
+	return stack.size();
     }
 
     public boolean isEmpty(){
-	return size==0;
+	return size()==0;
     }
 }
