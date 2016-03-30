@@ -3,6 +3,10 @@ import java.util.*;
 public class MyStack<T>{
     private MyLinkedList<T> stack;
 
+    public MyStack(){
+	stack=new MyLinkedList<T>();
+    }
+
     public void push (T item){
 	stack.add(0,item);
     }

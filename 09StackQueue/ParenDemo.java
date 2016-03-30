@@ -3,11 +3,40 @@ import java.util.*;
 public class ParenDemo{
 
     public static boolean isMatching(String s){
-	MyStack<Character>data=new MyStack<Character>();
-	for (int i=s.length()-1;i>=0;i--){
-	    data.push(s.charAt(i));
+	MyStack<Character> data=new MyStack<Character>();
+	for (char next: s.toCharArray()){
+	    if (next=='('||next=='{'||next=='['||next=='<'){
+		data.push(next);
+	    }
+	    if (next==')'||next=='}'||next==']'||next=='>'){
+		try{
+		    char expected = getMatch(next);
+		    if (data.pop()!=expected){
+			return false;
+		    }
+		}catch (NoSuchElementException e){
+		    return false;
+		}
+	    }
 	}
-	return true;
+	return data.isEmpty();
+    }
+
+    public static char getMatch (char c){
+	char match = 0;
+	if (c==')'){
+	    match='(';
+	}
+	if (c=='}'){
+	    match='{';
+	}
+	if (c==']'){
+	    match='[';
+	}
+	if (c=='>'){
+	    match='<';
+	}
+	return match;
     }
 
 
