@@ -32,4 +32,35 @@ public class MyStack<T>{
     public boolean isEmpty(){
 	return size()==0;
     }
+
+    public static void main (String[]args){
+	MyStack<Integer> data = new MyStack<Integer>();
+	
+	try{
+	    data.pop();
+	}catch (NoSuchElementException e){
+	    System.out.println("No Empty Stack Popping");
+	}
+
+	try{
+	    data.peek();
+	}catch (NoSuchElementException e){
+	    System.out.println("No Empty Stack Peeking");
+	}
+
+	System.out.println(data.size());
+	System.out.println(data.isEmpty());
+
+	for (int i = 0; i < 1000;i++){
+	    data.push(i);
+	}
+
+	System.out.println();
+	System.out.println(data.size());
+	System.out.println(data.isEmpty());
+
+	for (int i = 0; i < 1001; i++){
+	    System.out.println(data.pop());
+	}
+    }	
 }
