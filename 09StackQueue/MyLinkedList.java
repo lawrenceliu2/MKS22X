@@ -1,8 +1,15 @@
 import java.util.*;
 public class MyLinkedList<T> implements Iterable<T>{
+    LNode head;
+    LNode tail;
+    int size;
+    
+    
     private class LNode{
 	private T value;
 	private LNode next;
+	private LNode prev;
+	
 	public LNode(T v){
 	    value = v;
 	}
@@ -12,6 +19,9 @@ public class MyLinkedList<T> implements Iterable<T>{
 	public LNode getNext(){
 	    return next;
 	}
+	public LNode getPrev(){
+	    return prev;
+	}
 	public T setValue(T v){
 	    T old = value;
 	    value = v;
@@ -20,14 +30,14 @@ public class MyLinkedList<T> implements Iterable<T>{
 	public void setNext(LNode n){
 	    next = n;
 	}
+	public void setPrev(LNode n){
+	    prev = n;
+	}
 	public String toString(){
 	    return value.toString();
 	}
     }
 
-    LNode head;
-    LNode tail;
-    int size;
     
     public Iterator<T> iterator(){
 	//This uses an anonymous class! You don't need to know this.
@@ -50,7 +60,9 @@ public class MyLinkedList<T> implements Iterable<T>{
 		throw new UnsupportedOperationException();
 	    }
 	};
-    } 
+    }
+    
+    
     public String toString(){
 	String ans = "[";
 	LNode p = head;
@@ -63,9 +75,11 @@ public class MyLinkedList<T> implements Iterable<T>{
 	}
 	return ans+"]";
     }
+    
     public String toString(boolean b){
 	return toString()+" head: "+head +", tail: "+tail;
     }
+    
     private LNode getNth(int index){
 	//check bounds before calling this method!
 	LNode temp = head;
@@ -75,17 +89,20 @@ public class MyLinkedList<T> implements Iterable<T>{
 	}
 	return temp;
     }
+    
     public boolean add(T value){
 	if(head == null){
 	    head = new LNode(value);
 	    tail = head;
 	}else{
 	    tail.setNext(new LNode(value));
+	    tail.setPrev(tail);
 	    tail = tail.getNext();
 	}
 	size++;
 	return true;
     }
+    
     public T remove(int index){
 	if(index < 0 || index >= size()){
 	    throw new IndexOutOfBoundsException("Index: "+index+", Size: "+size());
@@ -118,6 +135,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	if(index == 0){
 	    temp.setNext(head);
 	    head = temp;
+	    temp.setPrev(head);
 	    if(size==0){
 		tail = head;
 	    }
@@ -125,6 +143,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    LNode p = getNth(index-1);
 	    temp.setNext(p.getNext());
 	    p.setNext(temp);
+	    temp.setPrev(p);
 	    if(tail.getNext() != null){
 		tail=tail.getNext();
 	    }
