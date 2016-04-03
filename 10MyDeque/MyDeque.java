@@ -52,6 +52,27 @@ public class MyDeque<T>{
 	if (size==data.length){
 	    grow();
 	}
+	int count = start;
+	T val = data[count];
+	data[count]=value;
+	count++;
+	for (int i=0;i<size;i++){
+	    if (count==data.length){
+		count=0;
+	    }
+	    value=data[count];
+	    data[count]=val;
+	    count++;
+	    val=value;
+	}
+	size++;
+	end++;
+    }
+
+    public void addLast (T value){
+	if (size==data.length){
+	    grow();
+	}
 	if (end==data.length-1){
 	    end=-1;
 	}
@@ -71,7 +92,7 @@ public class MyDeque<T>{
 	System.out.println(blah);
 	blah.addFirst(0);
 	blah.addFirst(1);
-	blah.addFirst(2);
+	/*blah.addFirst(2);
 	blah.addFirst(3);
 	blah.addFirst(4);
 	blah.addFirst(5);
@@ -79,7 +100,7 @@ public class MyDeque<T>{
 	blah.addFirst(7);
 	blah.addFirst(8);
 	blah.addFirst(9);
-	blah.addFirst(10);
+	blah.addFirst(10);*/
 	System.out.println(blah);
 	System.out.println(blah.size());
 	System.out.println(blah.start());
