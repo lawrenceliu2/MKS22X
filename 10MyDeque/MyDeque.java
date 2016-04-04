@@ -18,18 +18,8 @@ public class MyDeque<T>{
 		ans+=data[i]+", ";
 	    }
 	}
-	ans+="]";
+	ans+="]\nSize: "+size+"\nStart: "+start+"\nEnd: "+end;
 	return ans;
-    }
-
-    public int size(){
-	return size;
-    }
-    public int start(){
-	return start;
-    }
-    public int end(){
-	return end;
     }
 
     private void grow(){
@@ -66,7 +56,9 @@ public class MyDeque<T>{
 	    val=value;
 	}
 	size++;
-	end++;
+	if (size!=1){
+	    end++;
+	}
     }
 
     public void addLast (T value){
@@ -86,24 +78,58 @@ public class MyDeque<T>{
 	}
     }
 
+    public T removeFirst(){
+	if (size==0){
+	    throw new NoSuchElementException();
+	}
+	T ans = data[start];
+	int count=start;
+	for (int i=0;i<size-1;i++){
+	    if (count==data.length-1){
+		data[count]=data[0];
+		count=0;
+	    }else{
+		data[count]=data[count+1];
+		count++;
+	    }
+	}
+	size--;
+	if (end==0){
+	    end=data.length;
+	}
+	end--;
+	return ans;
+    }
+
+    public T removeLast(){
+	if (size==0){
+	    throw new NoSuchElementException();
+	}
+	T ans = data[end];
+	size--;
+	if (end==0){
+	    end=data.length;
+	}
+	end--;
+	return ans;
+    }
+
 
     public static void main(String[]args){
 	MyDeque<Integer> blah = new MyDeque<Integer>();
 	System.out.println(blah);
 	blah.addFirst(0);
 	blah.addFirst(1);
-	/*blah.addFirst(2);
+	blah.addFirst(2);
 	blah.addFirst(3);
 	blah.addFirst(4);
 	blah.addFirst(5);
-	blah.addFirst(6);
-	blah.addFirst(7);
-	blah.addFirst(8);
-	blah.addFirst(9);
-	blah.addFirst(10);*/
+        blah.addLast(6);
+	blah.addLast(7);
+	blah.addLast(8);
+	blah.addLast(9);
+	blah.removeLast();
+	blah.addLast(99);
 	System.out.println(blah);
-	System.out.println(blah.size());
-	System.out.println(blah.start());
-	System.out.println(blah.end());
     }
 }
