@@ -114,6 +114,20 @@ public class MyDeque<T>{
 	return ans;
     }
 
+    public T getFirst(){
+	if (size==0){
+	    throw new NoSuchElementException();
+	}
+	return data[start];
+    }
+
+    public T getLast(){
+	if (size==0){
+	    throw new NoSuchElementException();
+	}
+	return data[end];
+    }
+
 
     public static void main(String[]args){
 	MyDeque<Integer> blah = new MyDeque<Integer>();
@@ -131,5 +145,7 @@ public class MyDeque<T>{
 	blah.removeLast();
 	blah.addLast(99);
 	System.out.println(blah);
+	System.out.println(blah.getFirst());
+	System.out.println(blah.getLast());
     }
 }
