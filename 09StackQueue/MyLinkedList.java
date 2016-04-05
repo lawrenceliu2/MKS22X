@@ -61,6 +61,29 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    }
 	};
     }
+
+    public Iterator<T> iteratorBack(){
+	//This uses an anonymous class! You don't need to know this.
+	return new Iterator<T>()
+	{
+	    private LNode current = tail;
+
+	    public boolean hasNext(){
+		return current != null;
+	    }
+	    public T next(){
+		if(!hasNext()){
+		    throw new NoSuchElementException();
+		}
+		T value = current.getValue();
+		current = current.getPrev();
+		return value;
+	    }
+	    public void remove(){
+		throw new UnsupportedOperationException();
+	    }
+	};
+    }
     
     
     public String toString(){
@@ -95,8 +118,9 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    head = new LNode(value);
 	    tail = head;
 	}else{
-	    tail.setNext(new LNode(value));
-	    tail.setPrev(tail);
+	    LNode data = new LNode(value);
+	    data.setPrev(tail);
+	    tail.setNext(data);
 	    tail = tail.getNext();
 	}
 	size++;
@@ -110,20 +134,30 @@ public class MyLinkedList<T> implements Iterable<T>{
 	LNode temp;
 	if(index == 0){
 	    temp = head;
+	    head.setPrev(null);
 	    head = head.getNext();
 	    size--;
 	    if(head == null){
 		tail = null;
 	    }
 	    return temp.getValue();
-	}else{
+	}
+	if (index==size-1){
+	    T ans = tail.getValue();
+	    tail=tail.getPrev();
+	    tail.setNext(null);
+	    size--;
+	    return ans;
+	}
+	else{
 	    LNode p = getNth(index-1);
 	    temp = p.getNext();
+	    temp.getNext().setPrev(p);
 	    if(tail == temp){
 		tail = p;
 	    }
 	    p.setNext(p.getNext().getNext());
-	    size --;
+	    size--;
 	    return temp.getValue();
 	}
     }
@@ -135,15 +169,23 @@ public class MyLinkedList<T> implements Iterable<T>{
 	if(index == 0){
 	    temp.setNext(head);
 	    head = temp;
-	    temp.setPrev(head);
+	    head.setPrev(temp);
 	    if(size==0){
 		tail = head;
 	    }
-	}else{ 
+	    
+	}else if(index==size){
+	    tail.setNext(temp);
+	    temp=tail;
+	    tail=tail.getNext();
+	    tail.setPrev(temp);
+	}
+	else{ 
 	    LNode p = getNth(index-1);
 	    temp.setNext(p.getNext());
 	    p.setNext(temp);
 	    temp.setPrev(p);
+	    temp.getNext().setPrev(temp);
 	    if(tail.getNext() != null){
 		tail=tail.getNext();
 	    }
