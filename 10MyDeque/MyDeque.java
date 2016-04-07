@@ -24,6 +24,14 @@ public class MyDeque<T>{
 	return ans;
     }
 
+    public int size(){
+	return size;
+    }
+
+    public boolean isEmpty(){
+	return size==0;
+    }
+
     private void grow(){
 	T[] newData = (T[]) new Object[data.length*2];
 	int count=start;
