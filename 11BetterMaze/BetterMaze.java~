@@ -3,29 +3,15 @@ import java.io.*;
 
 public class BetterMaze{
     private class Node{
-	private Node prev;
-	private int location;
 
-	public Node(int Location, Node Prev){
-	    prev = Prev;
-	    location = Location;
-	}
-
-	public Node getPrev(){
-	    return prev;
-	}
-
-	public int getValue(){
-	    return location;
-	}
     }
 
     private char[][] maze;
-    private int[] solution;
-    private int startRow,startCol;
+    private int[]    solution;
+    private int      startRow,startCol;
     private Frontier<Node> placesToGo;
-    private boolean animate;
-    
+    private boolean  animate;//default to false
+
    /**return a COPY of solution.
      *This should be : [x1,y1,x2,y2,x3,y3...]
      *the coordinates of the solution from start to end.
@@ -43,16 +29,16 @@ public class BetterMaze{
     /**initialize the frontier as a queue and call solve
     **/
     public boolean solveBFS(){  
-        placesToGo = new FrontierQueue();
-	return solve();
+        /** IMPLEMENT THIS **/      
+	return false;
     }   
 
 
    /**initialize the frontier as a stack and call solve
     */ 
     public boolean solveDFS(){  
-        placesToGo = new FrontierStack();
-	return solve();
+        /** IMPLEMENT THIS **/  
+	return false;
     }    
 
    /**Search for the end of the maze using the frontier. 
@@ -62,10 +48,10 @@ public class BetterMaze{
         /** IMPLEMENT THIS **/  
 	return false;
     }    
+     
+   /**mutator for the animate variable  **/
+    public void setAnimate(boolean b){  /** IMPLEMENT THIS **/ }    
 
-    
-
-    public void setAnimate(boolean b){animate=b;}    
 
     public BetterMaze(String filename){
 	animate = false;
