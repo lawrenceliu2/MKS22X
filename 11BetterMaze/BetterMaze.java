@@ -2,21 +2,28 @@ import java.util.*;
 import java.io.*;
 
 public class BetterMaze{
+
     private class Node{
 	private Node prev;
-	private int location;
+	private int[] coordinates;
 
-	public Node(int Location, Node Prev){
+	public Node(int row, int col,  Node Prev){
 	    prev = Prev;
-	    location = Location;
+	    coordinates = new int[2];
+	    coordinates[0]=row;
+	    coordinates[1]=col;
 	}
 
 	public Node getPrev(){
 	    return prev;
 	}
 
-	public int getValue(){
-	    return location;
+	public int getRow(){
+	    return coordinates[0];
+	}
+
+	public int getCol(){
+	    return coordinates[1];
 	}
     }
 
@@ -35,15 +42,14 @@ public class BetterMaze{
      *Postcondition:  the correct solution is in the returned array
     **/
     public int[] solutionCoordinates(){
-        /** IMPLEMENT THIS **/      
-	return new int[1];
+
     }    
 
 
     /**initialize the frontier as a queue and call solve
     **/
     public boolean solveBFS(){  
-        placesToGo = new FrontierQueue();
+        placesToGo = new FrontierQueue<Node>();
 	return solve();
     }   
 
@@ -51,18 +57,34 @@ public class BetterMaze{
    /**initialize the frontier as a stack and call solve
     */ 
     public boolean solveDFS(){  
-        placesToGo = new FrontierStack();
+        placesToGo = new FrontierStack<Node>();
 	return solve();
     }    
 
    /**Search for the end of the maze using the frontier. 
       Keep going until you find a solution or run out of elements on the frontier.
     **/
-    private boolean solve(){  
-        /** IMPLEMENT THIS **/  
-	return false;
-    }    
+    private boolean solve(){
+	Node current = new Node(startRow, startCol, null);
+	placesToGo.add(current);
+	
+	maze[startRow][startCol]='.';	
+	
+    }
 
+    private void process(int row, int col){
+	if (row+1==' '){
+	    placesToGo.add(row
+	}
+	if (row-1==' '){
+
+	}
+	if (col+1==' '){
+
+	}
+	if (col-1==' '){
+
+	}
     
 
     public void setAnimate(boolean b){animate=b;}    
