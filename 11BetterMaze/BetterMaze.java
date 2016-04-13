@@ -68,22 +68,24 @@ public class BetterMaze{
 	Node current = new Node(startRow, startCol, null);
 	placesToGo.add(current);
 	
-	maze[startRow][startCol]='.';	
+	maze[startRow][startCol]='.';
+
+	process(startRow,startCol);
 	
     }
 
     private void process(int row, int col){
 	if (row+1==' '){
-	    placesToGo.add(row
+	    placesToGo.add(row+1,col);
 	}
 	if (row-1==' '){
-
+	    placesToGo.add(row-1,col);
 	}
 	if (col+1==' '){
-
+	    placesToGo.add(row,col+1);
 	}
 	if (col-1==' '){
-
+	    placesToGo.add(row,col-1);
 	}
     
 
