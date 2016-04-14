@@ -32,7 +32,6 @@ public class BetterMaze{
     private int startRow,startCol;
     private Frontier<Node> placesToGo;
     private boolean animate;
-    private Node last;
     
    /**return a COPY of solution.
      *This should be : [x1,y1,x2,y2,x3,y3...]
@@ -43,19 +42,7 @@ public class BetterMaze{
      *Postcondition:  the correct solution is in the returned array
     **/
     public int[] solutionCoordinates(){
-	int count=0;
-        while (last.getPrev()!=null){
-	    solution[count]=last.getRow();
-	    count++;
-	    solution[count]=last.getCol();
-	    count++;
-	    last=last.getPrev();
-	}
-	solution[count]=last.getRow();
-	count++;
-	solution[count]=last.getCol();
-	count++;
-	return solution;
+	return new int[1];
     }    
 
 
@@ -86,26 +73,25 @@ public class BetterMaze{
 		return true;
 	    }
 	    move(current);
-	    //System.out.println(this);
 	}
 	return false;
     }
 
     private boolean atEnd (Node data){
 	if (maze[data.getRow()+1][data.getCol()] == ('E')){
-	    last = new Node(data.getRow()+1, data.getCol(), data);
+	    placesToGo.add(new Node(data.getRow()+1, data.getCol(), data));
 	    return true;
 	}
 	if (maze[data.getRow()-1][data.getCol()] == ('E')){
-	    last = new Node(data.getRow()-1, data.getCol(), data);
+	    placesToGo.add(new Node(data.getRow()-1, data.getCol(), data));
 	    return true;
 	}
 	if (maze[data.getRow()][data.getCol()+1] == ('E')){
-	    last = new Node(data.getRow(), data.getCol()+1, data);
+	    placesToGo.add(new Node(data.getRow(), data.getCol()+1, data));
 	    return true;
 	}
 	if (maze[data.getRow()][data.getCol()-1] == ('E')){
-	    last = new Node(data.getRow(), data.getCol()-1, data);
+	    placesToGo.add(new Node(data.getRow(), data.getCol()-1, data));
 	    return true;
 	}
 	return false;
@@ -227,11 +213,11 @@ public class BetterMaze{
 	    return ans + color(37,40) + "\n";
 	}
     } 
+    
 
-    public static void main (String[]args){
-	BetterMaze test = new BetterMaze("data3.dat");
-	//test.setAnimate(true);
-	//test.solveBFS();
-	test.solveDFS();
-    }
+
+       
+    
+    
+
 }
