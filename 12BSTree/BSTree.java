@@ -3,11 +3,9 @@ public class BSTree<T extends Comparable<T>>{
     private class Node{
 	private T data;
 	private Node left,right;
-	private int height;
 
 	public Node(T value){
 	    data=value;
-	    height=1;
 	}
 
 	public T getData(){return data;}
@@ -23,7 +21,14 @@ public class BSTree<T extends Comparable<T>>{
 	public void setRight(Node value){right=value;}
 
 	public void add (T value){
-	    
+	    if (left==null){
+		left = new Node(value);
+	    }
+	    else if (right==null){
+		right = new Node(value);
+	    }
+	    else{
+
 	}
 
 	public String toString(){
@@ -31,14 +36,14 @@ public class BSTree<T extends Comparable<T>>{
 	}
 
 	public boolean contains(T value){
-	    
+		
 	}
     }
 
     private Node root;
 
     public int getHeight(){
-	return root.height();
+	return 0;
     }
 
     public void add(T value){
