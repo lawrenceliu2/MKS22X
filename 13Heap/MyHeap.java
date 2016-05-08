@@ -48,11 +48,20 @@ public class MyHeap<T extends Comparable<T>>{
 
     private void heapify(){
 	for (int i=data.length;i>0;i--){
-	    if (data[i].compareTo(data[i/2])
+	    if (data[i].compareTo(data[i/2])>0){
+		pushDown(i);
+	    }
+	}
     }
 
     public T delete(){
-	
+	T removed = data[1];
+	for (int i=1;i<size;i++){
+	    data[i]=data[i+1];
+	}
+	data[size]=null;
+	size--;
+	return removed;
     }
 
     public void add(T x){
@@ -73,20 +82,24 @@ public class MyHeap<T extends Comparable<T>>{
     }
 
     public String toString(){
-	String ans ="";
-	for (int i = 0;i<data.length;i++){
-	    ans+=data[i]+" ";
+	String ans ="[";
+	for (int i = 0;i<data.length-1;i++){
+	    ans+=data[i]+", ";
 	}
+	ans+=data[data.length-1]+"]";
 	return ans;
     }
 
     //do this last
     public MyHeap(boolean isMax){
-	
+	this();
     }
 
     public MyHeap(T[] array, boolean isMax){
-	
+	this(array);
+	if (isMax){
+	    heapify();
+	}
     }
 }
 
