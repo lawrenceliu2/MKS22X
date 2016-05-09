@@ -5,6 +5,7 @@ import java.util.*;
 public class MyHeap<T extends Comparable<T>>{
     private int size;
     private T[] data;
+    
 
     public MyHeap(){
 	data = (T[]) new Comparable[10];
@@ -47,14 +48,15 @@ public class MyHeap<T extends Comparable<T>>{
     }
 
     private void heapify(){
-	for (int i=data.length;i>0;i--){
-	    if (data[i].compareTo(data[i/2])>0){
-		pushDown(i);
-	    }
+	for (int i=size/2;i>0;i--){
+	    pushDown(i);
 	}
     }
 
-    public T delete(){
+    public T remove(){
+	if (size==0){
+	    throw new NoSuchElementException();
+	}
 	T removed = data[1];
 	for (int i=1;i<size;i++){
 	    data[i]=data[i+1];
@@ -62,6 +64,13 @@ public class MyHeap<T extends Comparable<T>>{
 	data[size]=null;
 	size--;
 	return removed;
+    }
+
+    public T peek(){
+	if (size==0){
+	    throw new NoSuchElementException();
+	}
+	return data[1];
     }
 
     public void add(T x){
@@ -83,7 +92,7 @@ public class MyHeap<T extends Comparable<T>>{
 
     public String toString(){
 	String ans ="[";
-	for (int i = 0;i<data.length-1;i++){
+	for (int i = 1;i<data.length-1;i++){
 	    ans+=data[i]+", ";
 	}
 	ans+=data[data.length-1]+"]";
@@ -102,4 +111,3 @@ public class MyHeap<T extends Comparable<T>>{
 	}
     }
 }
-
