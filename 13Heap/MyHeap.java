@@ -5,6 +5,7 @@ import java.util.*;
 public class MyHeap<T extends Comparable<T>>{
     private int size;
     private T[] data;
+    private boolean maxHeap;
     
 
     public MyHeap(){
@@ -21,17 +22,32 @@ public class MyHeap<T extends Comparable<T>>{
     }
 
     private void pushDown(int k){
-	if (k*2>data.length||k*2+1>data.length){}
-	else if (data[k].compareTo(data[k*2])<0){
-	    T ans = data[k];
-	    data[k]=data[k*2];
-	    data[k*2]=ans;
-	    pushDown(k*2);
-	}else if (data[k].compareTo(data[k*2+1])<0){
-	    T ans = data[k];
-	    data[k]=data[k*2+1];
-	    data[k*2+1]=ans;
-	    pushDown(k*2+1);
+	if (maxHeap){
+	    if (k*2>data.length||k*2+1>data.length){}
+	    else if (data[k].compareTo(data[k*2])<0){
+		T ans = data[k];
+		data[k]=data[k*2];
+		data[k*2]=ans;
+		pushDown(k*2);
+	    }else if (data[k].compareTo(data[k*2+1])<0){
+		T ans = data[k];
+		data[k]=data[k*2+1];
+		data[k*2+1]=ans;
+		pushDown(k*2+1);
+	    }
+	}else{
+	    if (k*2>data.length||k*2+1>data.length){}
+	    else if (data[k].compareTo(data[k*2])>0){
+		T ans = data[k];
+		data[k]=data[k*2];
+		data[k*2]=ans;
+		pushDown(k*2);
+	    }else if (data[k].compareTo(data[k*2+1])>0){
+		T ans = data[k];
+		data[k]=data[k*2+1];
+		data[k*2+1]=ans;
+		pushDown(k*2+1);
+	    }
 	}
     }
 
@@ -53,7 +69,7 @@ public class MyHeap<T extends Comparable<T>>{
 	}
     }
 
-    public T remove(){
+    public T delete(){
 	if (size==0){
 	    throw new NoSuchElementException();
 	}
@@ -101,13 +117,17 @@ public class MyHeap<T extends Comparable<T>>{
 
     //do this last
     public MyHeap(boolean isMax){
-	this();
+	maxHeap=isMax;
+	data = (T[]) new Comparable[10];
     }
 
     public MyHeap(T[] array, boolean isMax){
-	this(array);
-	if (isMax){
-	    heapify();
+	maxHeap=isMax;
+        size=array.length;
+	data = (T[]) new Comparable [size+1];
+	for (int i = 0;i<size;i++){
+	    data[i+1]=array[i];
 	}
+	heapify();
     }
 }
