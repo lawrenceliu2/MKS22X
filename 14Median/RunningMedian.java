@@ -14,7 +14,7 @@ public class RunningMedian {
 	if (minHeap.getSize()==0 && maxHeap.getSize()==0){
 	    throw new NoSuchElementException();
 	}
-	return 1.0;
+	return (min.peek()+max.peek())/2;
     }
 
     public void add(Integer x){
@@ -24,7 +24,11 @@ public class RunningMedian {
 	    maxHeap.add(x);
 	}
 	if (Math.abs(minHeap.getSize()-maxHeap.getSize())>1){
-	    //do stuffs?
+	    if (max.size()>min.size()){
+		min.add(max.delete());
+	    }else{
+		max.add(min.delete());
+	    }
 	}
     }
 
